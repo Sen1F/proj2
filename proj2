@@ -1,0 +1,98 @@
+package proj2;
+
+import java.io.*;
+import java.util.*;
+
+public class proj2 {
+    public static void main(String[] args) {
+        String fname = "haberman.data";
+        
+        try {
+            int count = FileCount(fname);
+            BufferedReader reader = new BufferedReader(new FileReader(fname));
+            List<String> lines = new ArrayList<>();
+            String line;
+            int[] l_ages = new int[count];
+            int[] l_years = new int[count];
+            int[] l_nodes = new int[count];
+            int[] l_statuses = new int[count];
+
+            int x = 0;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+
+                
+                String[] record = line.split(",");
+                l_ages[x] = Integer.parseInt(record[0]);
+                l_years[x] = Integer.parseInt(record[1]);
+                l_nodes[x] = Integer.parseInt(record[2]);
+                l_statuses[x] = Integer.parseInt(record[3]);
+                x++;
+            }
+
+            reader.close();
+            int avg_age_patients_survived = AvgPatientSurvived(l_ages, l_statuses, count);
+            int avg_age_patients_died = AvgPatientDied(l_ages, l_statuses, count);
+            int avg_nodes_patients_survived = AvgPatientSurvived(l_nodes, l_statuses, count);
+            int avg_nodes_patients_died = AvgPatientDied(l_nodes, l_statuses, count);
+            
+            System.out.println("Average Age of Patients Survived: " + avg_age_patients_survived);
+            System.out.println("Average Age of Patients Died: " + avg_age_patients_died);
+            System.out.println("Average Nodes of Patients Survived: " + avg_nodes_patients_survived);
+            System.out.println("Average Nodes of Patients Died: " + avg_nodes_patients_died);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int FileCount(String filename) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        String line;
+        int count = 0;
+        while ((line = reader.readLine()) != null) {
+            count++;
+        }
+        reader.close();
+        return count;
+    }
+
+    public static int AvgPatientSurvived(int[] target, int[] statuses, int count) {
+        int sum = 0;
+        int x_count = 0;
+
+        for (int i = 0; i < count; i++) {
+            if (statuses[i] == 1) {
+                sum += target[i];
+                x_count++;
+            }
+        }
+        return  (sum / x_count);
+    }
+
+    public static int AvgPatientDied(int[] target, int[] statuses, int count) {
+        int sum = 0;
+        int x_count = 0;
+
+        for (int i = 0; i < count; i++) {
+            if (statuses[i] == 2) {
+                sum += target[i];
+                x_count++;
+            }
+        }
+        return  (sum / x_count);
+    }
+
+    public static int RatePatientDied(int[] years, int[] statuses, int count) 
+    {
+        int sum = 0;
+        int x_count = 0;
+
+        for (int i = 0; i < count; i++) {
+            if (statuses[i] == 2) {
+                sum += target[i];
+                x_count++;
+            }
+        } 
+    }
+}
